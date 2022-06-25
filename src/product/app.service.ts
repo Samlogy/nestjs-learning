@@ -1,22 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { IProduct, products } from 'src/data/product';
-import { createProductDto, updateProductDto } from 'src/dto/product.dto';
-interface IResponseSuccess {
-  success: boolean;
-  data: any;
+import { products } from 'src/data/product';
+import { ProductResponseDto } from 'src/dto/product.dto';
+
+interface IPostProduct {
+  name: string;
+  price: number;
+  description: string;
+  imgUrl: string;
+}
+interface IUpdateProduct {
+  name?: string;
+  price?: number;
+  description?: string;
+  imgUrl?: string;
 }
 
 @Injectable()
 export class AppService {
-  getAllProducts(): IProduct[] {
+  getAllProducts(): ProductResponseDto[] {
     // business logic here
     return products;
   }
-  getOneProduct(id: string): IProduct {
+  getOneProduct(id: string): ProductResponseDto {
     // business logic here
     return products.find((el) => el.id === id);
   }
-  createProduct(body: createProductDto): IProduct {
+  createProduct(body: IPostProduct): ProductResponseDto {
     // business logic here
     return {
       id: 'uuid',
@@ -25,12 +34,11 @@ export class AppService {
       editedAt: null,
     };
   }
-  updateProduct(body: updateProductDto, id: string): IProduct {
+  updateProduct(body: IUpdateProduct, id: string): ProductResponseDto {
     // business logic here
+    const product = products.find((el) => el.id === id);
     return {
-      id: 'uuid',
-      ...body,
-      createdAt: new Date(),
+      ...product,
       editedAt: new Date(),
     };
   }

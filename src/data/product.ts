@@ -12,7 +12,7 @@ export const products: IProduct[] = [
   {
     id: 'uuid1',
     name: 'Sun glasses',
-    price: 7500,
+    price: 500,
     description: 'Sun glasses description ...',
     imgUrl: '',
     createdAt: new Date(),
@@ -21,7 +21,7 @@ export const products: IProduct[] = [
   {
     id: 'uuid2',
     name: 'solar cream',
-    price: 7500,
+    price: 20,
     description: 'Solar cream description ...',
     imgUrl: '',
     createdAt: new Date(),
@@ -30,8 +30,17 @@ export const products: IProduct[] = [
   {
     id: 'uuid3',
     name: 'cap',
-    price: 7500,
+    price: 150,
     description: 'cap description ...',
+    imgUrl: '',
+    createdAt: new Date(),
+    editedAt: new Date(),
+  },
+  {
+    id: 'uuid4',
+    name: 'Bottle of water',
+    price: 1,
+    description: 'Bottle of water description ...',
     imgUrl: '',
     createdAt: new Date(),
     editedAt: new Date(),
