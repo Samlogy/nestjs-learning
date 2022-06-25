@@ -18,7 +18,7 @@ interface IUpdateProduct {
 @Injectable()
 export class ProductService {
   getAllProducts(): ProductResponseDto[] {
-    // business logic here
+    // business logic here (bdd)
     return products;
   }
   getOneProduct(id: string): ProductResponseDto {
