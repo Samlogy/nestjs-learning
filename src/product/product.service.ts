@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { products } from 'src/data/product';
-import { ProductResponseDto } from 'src/dto/product.dto';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { IProduct } from 'src/data/product';
+import { PrismaService } from '../prisma/prisma.service';
 
 interface IPostProduct {
   name: string;
@@ -17,33 +18,74 @@ interface IUpdateProduct {
 
 @Injectable()
 export class ProductService {
-  getAllProducts(): ProductResponseDto[] {
-    // business logic here (bdd)
+  constructor(private prisma: PrismaService) {}
+
+  async getAllProducts(): Promise<IProduct[]> {
+    const products = await this.prisma.product.findMany();
     return products;
   }
-  getOneProduct(id: string): ProductResponseDto {
-    // business logic here
-    return products.find((el) => el.id === id);
+  async getOneProduct(id: number): Promise<IProduct> {
+    const product = await this.prisma.product.findUnique({
+      where: {
+        id,
+      },
+    });
+    return product;
   }
-  createProduct(body: IPostProduct): ProductResponseDto {
-    // business logic here
-    return {
-      id: 'uuid',
-      ...body,
-      createdAt: new Date(),
-      editedAt: null,
-    };
+  async createProduct(body: IPostProduct): Promise<IProduct> {
+    try {
+      const newProduct = await this.prisma.product.create({
+        data: { ...body },
+      });
+
+      return newProduct;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ForbiddenException('Credentials taken');
+        }
+      }
+      throw error;
+    }
   }
-  updateProduct(body: IUpdateProduct, id: string): ProductResponseDto {
-    // business logic here
-    const product = products.find((el) => el.id === id);
-    return {
-      ...product,
-      editedAt: new Date(),
-    };
+  async updateProduct(body: IUpdateProduct, id: number): Promise<IProduct> {
+    try {
+      const updatedProduct = await this.prisma.product.update({
+        where: {
+          id,
+        },
+        data: {
+          ...body,
+        },
+      });
+      return {
+        ...updatedProduct,
+        editedAt: new Date(),
+      };
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ForbiddenException('Credentials taken');
+        }
+      }
+      throw error;
+    }
   }
-  deleteProduct(id: string): string {
-    // business logic here
-    return id;
+  async deleteProduct(id: number): Promise<IProduct> {
+    try {
+      const deletedProduct = await this.prisma.product.delete({
+        where: {
+          id,
+        },
+      });
+      return deletedProduct;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ForbiddenException('Credentials taken');
+        }
+      }
+      throw error;
+    }
   }
 }

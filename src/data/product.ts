@@ -1,5 +1,5 @@
 export interface IProduct {
-  id: string;
+  id: number;
   name: string;
   price: number;
   description: string;
@@ -8,7 +8,7 @@ export interface IProduct {
   editedAt: Date;
 }
 
-export const products: IProduct[] = [
+export const products = [
   {
     id: 'uuid1',
     name: 'Sun glasses',
