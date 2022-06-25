@@ -12,7 +12,7 @@ import {
   ProductResponseDto,
   updateProductDto,
 } from 'src/dto/product.dto';
-import { ProductService } from './app.service';
+import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {

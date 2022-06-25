@@ -1,18 +1,11 @@
-import { ClassSerializerInterceptor, Module } from '@nestjs/common';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { ProductController } from 'src/product/app.controller';
-import { ProductService } from 'src/product/app.service';
-import { productModule } from 'src/product/app.module';
+import { Module } from '@nestjs/common';
+import { ProductController } from 'src/product/product.controller';
+import { productModule } from 'src/product/product.module';
+import { ProductService } from 'src/product/product.service';
 
 @Module({
-  imports: [productModule],
-  controllers: [ProductController],
-  providers: [
-    ProductService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ClassSerializerInterceptor,
-    },
-  ],
+  imports: [productModule], // add all modules
+  controllers: [ProductController], // add all controllers
+  providers: [ProductService], // add all services
 })
 export class AppModule {}
