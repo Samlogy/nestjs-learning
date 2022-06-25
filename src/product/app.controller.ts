@@ -8,8 +8,14 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { IProduct } from '../data/product';
+import { IProduct } from 'src/data/product';
 import { AppService } from './app.service';
+import { createProductDto, updateProductDto } from 'src/dto/product.dto';
+
+interface IResponseSuccess {
+  success: boolean;
+  data: any;
+}
 
 @Controller('product')
 export class AppController {
@@ -27,17 +33,20 @@ export class AppController {
 
   //@HttpCode(201)
   @Post()
-  createProduct(@Body() body: IProduct): IProduct {
+  createProduct(@Body() body: createProductDto): IProduct {
     return this.appService.createProduct(body);
   }
 
   @Put(':id')
-  updateProduct(@Body() body: IProduct, @Param('id') id: string): IProduct {
+  updateProduct(
+    @Body() body: updateProductDto,
+    @Param('id') id: string,
+  ): IProduct {
     return this.appService.updateProduct(body, id);
   }
 
   @Delete(':id')
-  deleteProduct(@Param('id') id: string): string {
+  deleteProduct(@Param('id') id: string): IResponseSuccess {
     return this.appService.deleteProduct(id);
   }
 }

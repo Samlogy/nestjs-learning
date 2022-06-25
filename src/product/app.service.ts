@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { IProduct, products } from '../data/product';
+import { IProduct, products } from 'src/data/product';
+import { createProductDto, updateProductDto } from 'src/dto/product.dto';
+interface IResponseSuccess {
+  success: boolean;
+  data: any;
+}
 
 @Injectable()
 export class AppService {
@@ -11,13 +16,23 @@ export class AppService {
     // business logic here
     return products.find((el) => el.id === id);
   }
-  createProduct(body: IProduct): IProduct {
+  createProduct(body: createProductDto): IProduct {
     // business logic here
-    return body;
+    return {
+      id: 'uuid',
+      ...body,
+      createdAt: new Date(),
+      editedAt: null,
+    };
   }
-  updateProduct(body: IProduct, id: string): IProduct {
+  updateProduct(body: updateProductDto, id: string): IProduct {
     // business logic here
-    return body;
+    return {
+      id: 'uuid',
+      ...body,
+      createdAt: new Date(),
+      editedAt: new Date(),
+    };
   }
   deleteProduct(id: string): string {
     // business logic here
