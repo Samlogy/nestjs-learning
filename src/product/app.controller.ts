@@ -10,9 +10,10 @@ import {
   ParseUUIDPipe,
   ParseEnumPipe,
 } from '@nestjs/common';
-import { ReportType } from 'src/data';
+import { ReportType } from 'src/data/product';
 import { AppService } from './app.service';
 import { IData } from './data';
+import { CreateReportDto, UpdateReportDto } from './dto/report.dto';
 
 @Controller()
 export class AppController {
@@ -24,14 +25,13 @@ export class AppController {
   }
 
   @Get(':id')
-  getOneReport(@Param('id') id: string): IData {
+  getOneReport(@Param('id', ParseUUIDPipe) id: string): IData {
     return this.appService.getOneReport(id);
   }
 
-  @HttpCode(201)
+  //@HttpCode(201)
   @Post()
   createReport(@Body() body: IData): IData {
-    console.log('body: ', body);
     return this.appService.createReport(body);
   }
 
@@ -41,7 +41,7 @@ export class AppController {
   }
 
   @Delete(':id')
-  DeleteReport(@Param('id') id: string): string {
+  DeleteReport(@Param('id', ParseUUIDPipe) id: string): string {
     return this.appService.DeleteReport(id);
   }
 }
