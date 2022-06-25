@@ -28,6 +28,10 @@ export class AuthService {
           password,
           username: this.generateUsername(body.email),
         },
+        select: {
+          password: false,
+          id: true,
+        },
       });
 
       return this.signToken(user.id, user);
@@ -50,6 +54,7 @@ export class AuthService {
     if (!user) throw new ForbiddenException('Credentials incorrect');
     const passwordMatches = await argon.verify(user.password, body.password);
     if (!passwordMatches) throw new ForbiddenException('Credentials incorrect');
+    delete user.password;
     return this.signToken(user.id, user);
   }
 

@@ -11,8 +11,8 @@ nest g service service_name
 
 handle rest api
 handle graphql api
-auth service (jwt / passport)
-add db --> sql (postgres) + primsa / orm
+auth --> add logout ? 
+add db --> sql  orm
 add db --> nosql (mongo) + primsa / orm
 
 NB: (simple code version) --> learning purpose
