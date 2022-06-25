@@ -8,7 +8,7 @@ export interface IProduct {
   editedAt: Date;
 }
 
-export const data: IProduct[] = [
+export const products: IProduct[] = [
   {
     id: 'uuid1',
     name: 'Sun glasses',

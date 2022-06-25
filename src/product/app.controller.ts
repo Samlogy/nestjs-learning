@@ -1,47 +1,43 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  ParseUUIDPipe,
   Post,
   Put,
-  Delete,
-  Param,
-  Body,
-  HttpCode,
-  ParseUUIDPipe,
-  ParseEnumPipe,
 } from '@nestjs/common';
-import { ReportType } from 'src/data/product';
+import { IProduct } from '../data/product';
 import { AppService } from './app.service';
-import { IData } from './data';
-import { CreateReportDto, UpdateReportDto } from './dto/report.dto';
 
-@Controller()
+@Controller('product')
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
+  //proudct/uuid1
   @Get()
-  getAllReports(): IData[] {
-    return this.appService.getAllReports();
+  getAllProducts(): IProduct[] {
+    return this.appService.getAllProducts();
   }
 
   @Get(':id')
-  getOneReport(@Param('id', ParseUUIDPipe) id: string): IData {
-    return this.appService.getOneReport(id);
+  getOneProduct(@Param('id') id: string): IProduct {
+    return this.appService.getOneProduct(id);
   }
 
   //@HttpCode(201)
   @Post()
-  createReport(@Body() body: IData): IData {
-    return this.appService.createReport(body);
+  createProduct(@Body() body: IProduct): IProduct {
+    return this.appService.createProduct(body);
   }
 
   @Put(':id')
-  updateReport(@Body() body: IData, @Param('id') id: string): IData {
-    return this.appService.updateReport(body, id);
+  updateProduct(@Body() body: IProduct, @Param('id') id: string): IProduct {
+    return this.appService.updateProduct(body, id);
   }
 
   @Delete(':id')
-  DeleteReport(@Param('id', ParseUUIDPipe) id: string): string {
-    return this.appService.DeleteReport(id);
+  deleteProduct(@Param('id') id: string): string {
+    return this.appService.deleteProduct(id);
   }
 }

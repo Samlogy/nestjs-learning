@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { IData, data } from './data';
+import { IProduct, products } from '../data/product';
 
 @Injectable()
 export class AppService {
-  getAllReports(): IData[] {
+  getAllProducts(): IProduct[] {
     // business logic here
-    return data;
+    return products;
   }
-  getOneReport(id: string): IData {
+  getOneProduct(id: string): IProduct {
     // business logic here
-    return data.find((el) => el.id === id);
+    return products.find((el) => el.id === id);
   }
-  createReport(body: IData): IData {
-    // business logic here
-    return body;
-  }
-  updateReport(body: IData, id: string): IData {
+  createProduct(body: IProduct): IProduct {
     // business logic here
     return body;
   }
-  DeleteReport(id: string): string {
+  updateProduct(body: IProduct, id: string): IProduct {
+    // business logic here
+    return body;
+  }
+  deleteProduct(id: string): string {
     // business logic here
     return id;
   }
