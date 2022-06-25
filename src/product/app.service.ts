@@ -16,7 +16,7 @@ interface IUpdateProduct {
 }
 
 @Injectable()
-export class AppService {
+export class ProductService {
   getAllProducts(): ProductResponseDto[] {
     // business logic here
     return products;

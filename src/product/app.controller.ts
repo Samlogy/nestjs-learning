@@ -7,32 +7,31 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { IProduct } from 'src/data/product';
 import {
   createProductDto,
-  updateProductDto,
   ProductResponseDto,
+  updateProductDto,
 } from 'src/dto/product.dto';
-import { AppService } from './app.service';
+import { ProductService } from './app.service';
 
 @Controller('product')
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+export class ProductController {
+  constructor(private readonly productService: ProductService) {}
   //proudct/uuid1
   @Get()
   getAllProducts(): ProductResponseDto[] {
-    return this.appService.getAllProducts();
+    return this.productService.getAllProducts();
   }
 
   @Get(':id')
   getOneProduct(@Param('id') id: string): ProductResponseDto {
-    return this.appService.getOneProduct(id);
+    return this.productService.getOneProduct(id);
   }
 
   //@HttpCode(201)
   @Post()
   createProduct(@Body() body: createProductDto): ProductResponseDto {
-    return this.appService.createProduct(body);
+    return this.productService.createProduct(body);
   }
 
   @Put(':id')
@@ -40,11 +39,11 @@ export class AppController {
     @Body() body: updateProductDto,
     @Param('id') id: string,
   ): ProductResponseDto {
-    return this.appService.updateProduct(body, id);
+    return this.productService.updateProduct(body, id);
   }
 
   @Delete(':id')
   deleteProduct(@Param('id') id: string): string {
-    return this.appService.deleteProduct(id);
+    return this.productService.deleteProduct(id);
   }
 }
